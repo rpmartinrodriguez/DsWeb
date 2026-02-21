@@ -149,8 +149,8 @@ async def approve_testimonial(testimonial_id: str, admin: AdminUser = Depends(ge
     return Testimonial(**{**updated, "id": str(updated["_id"])})
 
 @router.delete("/testimonials/{testimonial_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_testimonial(testimonial_id: str):
-    """Delete testimonial"""
+async def delete_testimonial(testimonial_id: str, admin: AdminUser = Depends(get_current_admin)):
+    """Delete testimonial (Admin only)"""
     result = await db.testimonials.delete_one({"_id": testimonial_id})
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Testimonial not found")
