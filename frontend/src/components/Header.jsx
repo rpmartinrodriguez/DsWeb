@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from './ui/button';
-import { Menu, X, Instagram, Phone } from 'lucide-react';
+import { Menu, X, Instagram, Phone, ShoppingCart } from 'lucide-react';
+import { useCart } from '../context/CartContext';
 
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { toggleCart, getCartItemsCount } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -78,6 +80,22 @@ export const Header = () => {
             >
               <Instagram className="w-5 h-5" />
             </a>
+            
+            {/* Cart Button */}
+            <button
+              onClick={toggleCart}
+              className={`relative transition-colors hover:text-[#E8B4B8] ${
+                isScrolled ? 'text-[#5c3a3a]' : 'text-[#F5EDE0]'
+              }`}
+            >
+              <ShoppingCart className="w-5 h-5" />
+              {getCartItemsCount() > 0 && (
+                <span className="absolute -top-2 -right-2 w-5 h-5 bg-[#E8B4B8] border-2 border-[#C9A5A5] rounded-full flex items-center justify-center text-xs font-bold text-[#5c3a3a]">
+                  {getCartItemsCount()}
+                </span>
+              )}
+            </button>
+            
             <Button
               size="sm"
               className="bg-[#E8B4B8] hover:bg-[#D8A7A7] text-[#5c3a3a] font-['Cormorant_Garamond'] font-semibold border-2 border-[#C9A5A5] shadow-md"
@@ -123,6 +141,17 @@ export const Header = () => {
                 >
                   <Instagram className="w-5 h-5" />
                 </a>
+                <button
+                  onClick={toggleCart}
+                  className="relative text-[#5c3a3a] hover:text-[#E8B4B8]"
+                >
+                  <ShoppingCart className="w-5 h-5" />
+                  {getCartItemsCount() > 0 && (
+                    <span className="absolute -top-2 -right-2 w-5 h-5 bg-[#E8B4B8] border-2 border-[#C9A5A5] rounded-full flex items-center justify-center text-xs font-bold text-[#5c3a3a]">
+                      {getCartItemsCount()}
+                    </span>
+                  )}
+                </button>
                 <Button
                   size="sm"
                   className="bg-[#E8B4B8] hover:bg-[#D8A7A7] text-[#5c3a3a] font-['Cormorant_Garamond'] font-semibold border-2 border-[#C9A5A5] flex-1"
