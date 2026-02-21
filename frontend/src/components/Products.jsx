@@ -30,17 +30,31 @@ export const Products = () => {
   };
 
   return (
-    <section id="productos" className="py-24 bg-gradient-to-b from-white to-rose-50/30">
+    <section id="productos" className="py-24 bg-gradient-to-b from-[#F5EDE0] to-[#EDE0D4] relative">
+      {/* Vintage Corner Ornaments */}
+      <div className="absolute top-10 left-10 text-[#C9A875] text-4xl opacity-20 select-none">✦</div>
+      <div className="absolute top-10 right-10 text-[#C9A875] text-4xl opacity-20 select-none">✦</div>
+      
       <div className="container mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-16">
-          <span className="inline-block px-4 py-2 bg-rose-100 text-rose-800 rounded-full text-sm font-medium mb-4">
-            Nuestros Productos
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <div className="inline-block px-6 py-3 bg-[#E8B4B8]/30 border-2 border-[#E8B4B8] text-[#5c3a3a] mb-6 relative">
+            <span className="font-['Cormorant_Garamond'] text-sm font-semibold tracking-[0.3em]">NUESTROS PRODUCTOS</span>
+            <div className="absolute -top-2 -left-2 w-4 h-4 border-t-2 border-l-2 border-[#C9A875]"></div>
+            <div className="absolute -top-2 -right-2 w-4 h-4 border-t-2 border-r-2 border-[#C9A875]"></div>
+            <div className="absolute -bottom-2 -left-2 w-4 h-4 border-b-2 border-l-2 border-[#C9A875]"></div>
+            <div className="absolute -bottom-2 -right-2 w-4 h-4 border-b-2 border-r-2 border-[#C9A875]"></div>
+          </div>
+          <h2 className="text-5xl md:text-6xl font-['Playfair_Display'] font-bold text-[#5c3a3a] mb-4">
             Delicias Artesanales
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          {/* Decorative Divider */}
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="w-20 h-0.5 bg-[#C9A875]"></div>
+            <span className="text-[#C9A875] text-2xl">❦</span>
+            <div className="w-20 h-0.5 bg-[#C9A875]"></div>
+          </div>
+          <p className="text-xl text-[#8B6F6F] max-w-2xl mx-auto font-['Cormorant_Garamond'] italic">
             Cada producto es elaborado con ingredientes premium y mucho amor
           </p>
         </div>
@@ -52,10 +66,10 @@ export const Products = () => {
               key={category}
               variant={selectedCategory === category ? 'default' : 'outline'}
               onClick={() => setSelectedCategory(category)}
-              className={`rounded-full ${
+              className={`font-['Cormorant_Garamond'] font-semibold border-2 transition-all ${
                 selectedCategory === category
-                  ? 'bg-rose-500 hover:bg-rose-600 text-white'
-                  : 'border-rose-200 text-gray-700 hover:bg-rose-50'
+                  ? 'bg-[#E8B4B8] hover:bg-[#D8A7A7] text-[#5c3a3a] border-[#C9A5A5] shadow-md'
+                  : 'border-[#E8B4B8] text-[#5c3a3a] hover:bg-[#E8B4B8]/20 bg-[#F5EDE0]'
               }`}
             >
               {category}
@@ -68,33 +82,37 @@ export const Products = () => {
           {filteredProducts.map((product) => (
             <Card
               key={product.id}
-              className="group overflow-hidden border-0 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-white"
+              className="group overflow-hidden border-4 border-[#E8B4B8]/30 hover:border-[#E8B4B8] shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-[#F5EDE0] relative"
             >
+              {/* Vintage Corner Decorations */}
+              <div className="absolute top-2 left-2 w-6 h-6 border-t-2 border-l-2 border-[#C9A875] opacity-50 z-10"></div>
+              <div className="absolute top-2 right-2 w-6 h-6 border-t-2 border-r-2 border-[#C9A875] opacity-50 z-10"></div>
+              
               <div className="relative overflow-hidden aspect-square">
                 <img
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 sepia-[0.15]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <Badge className="absolute top-4 right-4 bg-rose-500 text-white border-0">
+                <div className="absolute inset-0 bg-gradient-to-t from-[#5c3a3a]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <Badge className="absolute top-4 right-4 bg-[#E8B4B8]/95 text-[#5c3a3a] border-2 border-[#C9A5A5] font-['Cormorant_Garamond'] font-semibold shadow-lg">
                   {product.category}
                 </Badge>
               </div>
-              <CardContent className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-rose-600 transition-colors">
+              <CardContent className="p-6 bg-[#F5EDE0]">
+                <h3 className="text-2xl font-['Playfair_Display'] font-bold text-[#5c3a3a] mb-2 group-hover:text-[#8B6F6F] transition-colors">
                   {product.name}
                 </h3>
-                <p className="text-gray-600 mb-4 line-clamp-2">
+                <p className="text-[#8B6F6F] mb-4 line-clamp-2 font-['Cormorant_Garamond']">
                   {product.description}
                 </p>
                 <div className="flex items-center justify-between">
-                  <span className="text-2xl font-bold text-rose-600">
+                  <span className="text-2xl font-['Playfair_Display'] font-bold text-[#C9A875]">
                     {formatPrice(product.price)}
                   </span>
                   <Button
                     size="sm"
-                    className="bg-rose-500 hover:bg-rose-600 text-white"
+                    className="bg-[#E8B4B8] hover:bg-[#D8A7A7] text-[#5c3a3a] font-['Cormorant_Garamond'] font-semibold border-2 border-[#C9A5A5]"
                     onClick={() => handleAddToCart(product)}
                   >
                     <ShoppingCart className="w-4 h-4 mr-2" />
