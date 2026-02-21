@@ -213,8 +213,8 @@ async def create_order(order: OrderCreate):
     return Order(**{**created_order, "id": str(created_order["_id"])})
 
 @router.get("/orders", response_model=List[Order])
-async def get_orders():
-    """Get all orders"""
+async def get_orders(admin: AdminUser = Depends(get_current_admin)):
+    """Get all orders (Admin only)"""
     orders = await db.orders.find().sort("created_at", -1).to_list(100)
     return [Order(**{**order, "id": str(order["_id"])}) for order in orders]
 
