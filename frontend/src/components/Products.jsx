@@ -1,13 +1,31 @@
-import React, { useState } from 'react';
-import { products } from '../data/mock';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { ShoppingCart } from 'lucide-react';
-import { toast } from 'sonner';
+import { getProducts } from '../services/api';
+import { useCart } from '../context/CartContext';
 
 export const Products = () => {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { addToCart } = useCart();
+  
+  useEffect(() => {
+    loadProducts();
+  }, []);
+
+  const loadProducts = async () => {
+    try {
+      const data = await getProducts();
+      setProducts(data);
+    } catch (error) {
+      console.error('Error loading products:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
   
   const categories = ['Todos', ...new Set(products.map(p => p.category))];
   
@@ -16,9 +34,7 @@ export const Products = () => {
     : products.filter(p => p.category === selectedCategory);
 
   const handleAddToCart = (product) => {
-    toast.success(`${product.name} agregado al carrito`, {
-      description: `Precio: $${product.price.toLocaleString('es-CO')}`,
-    });
+    addToCart(product, 1);
   };
 
   const formatPrice = (price) => {
@@ -79,7 +95,19 @@ export const Products = () => {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProducts.map((product) => (
+          {loading ? (
+            <div className="col-span-full text-center py-20">
+              <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-[#E8B4B8] border-t-transparent"></div>
+              <p className="mt-4 text-xl font-['Cormorant_Garamond'] text-[#8B6F6F]">Cargando productos...</p>
+            </div>
+          ) : filteredProducts.length === 0 ? (
+            <div className="col-span-full text-center py-20">
+              <p className="text-xl font-['Cormorant_Garamond'] text-[#8B6F6F]">
+                No hay productos disponibles en esta categoría
+              </p>
+            </div>
+          ) : (
+            filteredProducts.map((product) => (
             <Card
               key={product.id}
               className="group overflow-hidden border-4 border-[#E8B4B8]/30 hover:border-[#E8B4B8] shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-[#F5EDE0] relative"
@@ -121,7 +149,8 @@ export const Products = () => {
                 </div>
               </CardContent>
             </Card>
-          ))}
+          ))
+          )}
         </div>
       </div>
     </section>
