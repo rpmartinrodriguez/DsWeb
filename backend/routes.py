@@ -28,8 +28,11 @@ async def get_products(active_only: bool = True):
     products = await db.products.find(query).to_list(100)
     result = []
     for product in products:
-        product['id'] = product.pop('_id')
-        result.append(Product(**product))
+        product_dict = dict(product)
+        product_dict['id'] = str(product_dict.get('_id', ''))
+        if '_id' in product_dict:
+            del product_dict['_id']
+        result.append(Product(**product_dict))
     return result
 
 @router.get("/products/{product_id}", response_model=Product)
@@ -38,8 +41,11 @@ async def get_product(product_id: str):
     product = await db.products.find_one({"_id": product_id})
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
-    product['id'] = product.pop('_id')
-    return Product(**product)
+    product_dict = dict(product)
+    product_dict['id'] = str(product_dict.get('_id', ''))
+    if '_id' in product_dict:
+        del product_dict['_id']
+    return Product(**product_dict)
 
 @router.post("/products", response_model=Product, status_code=status.HTTP_201_CREATED)
 async def create_product(product: ProductCreate):
@@ -89,8 +95,11 @@ async def get_testimonials(approved_only: bool = True):
     testimonials = await db.testimonials.find(query).sort("date", -1).to_list(100)
     result = []
     for t in testimonials:
-        t['id'] = t.pop('_id')
-        result.append(Testimonial(**t))
+        t_dict = dict(t)
+        t_dict['id'] = str(t_dict.get('_id', ''))
+        if '_id' in t_dict:
+            del t_dict['_id']
+        result.append(Testimonial(**t_dict))
     return result
 
 @router.post("/testimonials", response_model=Testimonial, status_code=status.HTTP_201_CREATED)
