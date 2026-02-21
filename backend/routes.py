@@ -176,8 +176,8 @@ async def get_config():
     return SiteConfig(**{**default_config, **config_dict})
 
 @router.put("/config", response_model=SiteConfig)
-async def update_config(config: SiteConfigUpdate):
-    """Update site configuration"""
+async def update_config(config: SiteConfigUpdate, admin: AdminUser = Depends(get_current_admin)):
+    """Update site configuration (Admin only)"""
     config_dict = config.dict(exclude_none=True)
     
     for key, value in config_dict.items():
