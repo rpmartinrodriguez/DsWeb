@@ -26,7 +26,11 @@ async def get_products(active_only: bool = True):
     """Get all products (public endpoint)"""
     query = {"active": True} if active_only else {}
     products = await db.products.find(query).to_list(100)
-    return [Product(**{**{k: v for k, v in product.items() if k != '_id'}, "id": product.get("_id", product.get("id", ""))}) for product in products]
+    result = []
+    for product in products:
+        product['id'] = product.pop('_id')
+        result.append(Product(**product))
+    return result
 
 @router.get("/products/{product_id}", response_model=Product)
 async def get_product(product_id: str):
@@ -34,7 +38,8 @@ async def get_product(product_id: str):
     product = await db.products.find_one({"_id": product_id})
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
-    return Product(**{**product, "id": str(product["_id"])})
+    product['id'] = product.pop('_id')
+    return Product(**product)
 
 @router.post("/products", response_model=Product, status_code=status.HTTP_201_CREATED)
 async def create_product(product: ProductCreate):
@@ -82,7 +87,11 @@ async def get_testimonials(approved_only: bool = True):
     """Get all testimonials"""
     query = {"approved": True} if approved_only else {}
     testimonials = await db.testimonials.find(query).sort("date", -1).to_list(100)
-    return [Testimonial(**{**{k: v for k, v in t.items() if k != '_id'}, "id": t.get("_id", t.get("id", ""))}) for t in testimonials]
+    result = []
+    for t in testimonials:
+        t['id'] = t.pop('_id')
+        result.append(Testimonial(**t))
+    return result
 
 @router.post("/testimonials", response_model=Testimonial, status_code=status.HTTP_201_CREATED)
 async def create_testimonial(testimonial: TestimonialCreate):
