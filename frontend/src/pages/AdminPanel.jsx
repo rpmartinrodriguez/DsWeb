@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Card, CardContent } from '../components/ui/card';
@@ -6,13 +6,14 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
-import { getProducts, createProduct, updateProduct, deleteProduct, getOrders, getTestimonials, approveTestimonial, updateOrderStatus } from '../services/api';
+import { getProducts, createProduct, updateProduct, deleteProduct, getOrders, getTestimonials, approveTestimonial, updateOrderStatus, uploadImage } from '../services/api';
 import { toast } from 'sonner';
-import { Package, ShoppingBag, Star, Plus, Edit, Trash2, Check, LogOut, MessageCircle } from 'lucide-react';
+import { Package, ShoppingBag, Star, Plus, Edit, Trash2, Check, LogOut, MessageCircle, Upload, Image } from 'lucide-react';
 
 export const AdminPanel = () => {
   const navigate = useNavigate();
   const { logout } = useAuth();
+  const fileInputRef = useRef(null);
   const [products, setProducts] = useState([]);
   const [orders, setOrders] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
