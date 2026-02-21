@@ -124,4 +124,18 @@ export const submitContact = async (contact) => {
   return response.data;
 };
 
+// ==================== IMAGE UPLOAD ====================
+
+export const uploadImage = async (file) => {
+  const formData = new FormData();
+  formData.append('file', file);
+  
+  const response = await apiClient.post('/upload', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return response.data;
+};
+
 export default apiClient;
