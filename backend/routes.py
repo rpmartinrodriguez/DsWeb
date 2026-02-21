@@ -21,7 +21,7 @@ db = client[os.environ.get('DB_NAME', 'dulcesal')]
 
 # ==================== PRODUCTS ====================
 
-@router.get("/products", response_model=List[Product])
+@router.get("/products")
 async def get_products(active_only: bool = True):
     """Get all products (public endpoint)"""
     query = {"active": True} if active_only else {}
@@ -32,7 +32,7 @@ async def get_products(active_only: bool = True):
         product_dict['id'] = str(product_dict.get('_id', ''))
         if '_id' in product_dict:
             del product_dict['_id']
-        result.append(Product(**product_dict))
+        result.append(product_dict)
     return result
 
 @router.get("/products/{product_id}", response_model=Product)
