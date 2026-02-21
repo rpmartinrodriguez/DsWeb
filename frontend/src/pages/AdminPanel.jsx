@@ -561,6 +561,31 @@ Hemos recibido tu pedido #${order.order_number} por un total de ${formatPrice(or
                           ))}
                         </div>
                       </div>
+
+                      {/* WhatsApp Actions */}
+                      <div className="mt-4 pt-4 border-t-2 border-[#E8B4B8]">
+                        <p className="text-sm text-[#8B6F6F] mb-2">Acciones WhatsApp:</p>
+                        <div className="flex flex-wrap gap-2">
+                          <Button
+                            size="sm"
+                            data-testid="whatsapp-notify-btn"
+                            onClick={() => sendOrderToWhatsApp(order)}
+                            className="bg-green-500 hover:bg-green-600 text-white"
+                          >
+                            <MessageCircle className="w-4 h-4 mr-2" />
+                            Guardar Pedido
+                          </Button>
+                          <Button
+                            size="sm"
+                            data-testid="whatsapp-contact-btn"
+                            onClick={() => contactCustomerWhatsApp(order)}
+                            className="bg-green-600 hover:bg-green-700 text-white"
+                          >
+                            <MessageCircle className="w-4 h-4 mr-2" />
+                            Contactar Cliente
+                          </Button>
+                        </div>
+                      </div>
                     </CardContent>
                   </Card>
                 ))
