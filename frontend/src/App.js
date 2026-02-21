@@ -26,7 +26,6 @@ const HomePage = () => (
     <Testimonials />
     <Contact />
     <Footer />
-    <CartSidebar />
   </>
 );
 
@@ -39,6 +38,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/checkout" element={<Checkout />} />
           </Routes>
+          <CartSidebar />
           <Toaster position="top-right" />
         </div>
       </BrowserRouter>
