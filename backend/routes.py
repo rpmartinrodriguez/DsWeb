@@ -26,7 +26,7 @@ async def get_products(active_only: bool = True):
     """Get all products (public endpoint)"""
     query = {"active": True} if active_only else {}
     products = await db.products.find(query).to_list(100)
-    return [Product(**{**product, "id": str(product["_id"])}) for product in products]
+    return [Product(**{**{k: v for k, v in product.items() if k != '_id'}, "id": product.get("_id", product.get("id", ""))}) for product in products]
 
 @router.get("/products/{product_id}", response_model=Product)
 async def get_product(product_id: str):
@@ -82,7 +82,7 @@ async def get_testimonials(approved_only: bool = True):
     """Get all testimonials"""
     query = {"approved": True} if approved_only else {}
     testimonials = await db.testimonials.find(query).sort("date", -1).to_list(100)
-    return [Testimonial(**{**t, "id": str(t["_id"])}) for t in testimonials]
+    return [Testimonial(**{**{k: v for k, v in t.items() if k != '_id'}, "id": t.get("_id", t.get("id", ""))}) for t in testimonials]
 
 @router.post("/testimonials", response_model=Testimonial, status_code=status.HTTP_201_CREATED)
 async def create_testimonial(testimonial: TestimonialCreate):
