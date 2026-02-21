@@ -8,7 +8,7 @@ import { Textarea } from '../components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import { getProducts, createProduct, updateProduct, deleteProduct, getOrders, getTestimonials, approveTestimonial, updateOrderStatus } from '../services/api';
 import { toast } from 'sonner';
-import { Package, ShoppingBag, Star, Plus, Edit, Trash2, Check, LogOut } from 'lucide-react';
+import { Package, ShoppingBag, Star, Plus, Edit, Trash2, Check, LogOut, MessageCircle } from 'lucide-react';
 
 export const AdminPanel = () => {
   const navigate = useNavigate();
