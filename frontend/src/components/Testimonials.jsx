@@ -110,8 +110,7 @@ export const Testimonials = () => {
                 </div>
               </CardContent>
             </Card>
-          ))
-          )}
+          ))}
         </div>
         </div>
 
