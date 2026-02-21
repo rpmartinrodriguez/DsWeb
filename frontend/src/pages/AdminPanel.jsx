@@ -477,6 +477,33 @@ export const AdminPanel = () => {
                           <p className="text-[#5c3a3a]">{order.notes}</p>
                         </div>
                       )}
+
+                      {/* Order Status Actions */}
+                      <div className="mt-4 pt-4 border-t-2 border-[#E8B4B8]">
+                        <p className="text-sm text-[#8B6F6F] mb-2">Cambiar estado:</p>
+                        <div className="flex flex-wrap gap-2">
+                          {['pending', 'confirmed', 'preparing', 'completed', 'cancelled'].map((statusOption) => (
+                            <Button
+                              key={statusOption}
+                              size="sm"
+                              data-testid={`order-status-${statusOption}-btn`}
+                              onClick={() => handleUpdateOrderStatus(order.id, statusOption)}
+                              disabled={order.status === statusOption}
+                              className={`text-xs ${
+                                order.status === statusOption 
+                                  ? 'bg-gray-300 cursor-not-allowed' 
+                                  : getOrderStatusColor(statusOption) + ' hover:opacity-80'
+                              }`}
+                            >
+                              {statusOption === 'pending' && 'Pendiente'}
+                              {statusOption === 'confirmed' && 'Confirmado'}
+                              {statusOption === 'preparing' && 'Preparando'}
+                              {statusOption === 'completed' && 'Completado'}
+                              {statusOption === 'cancelled' && 'Cancelado'}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
                     </CardContent>
                   </Card>
                 ))
