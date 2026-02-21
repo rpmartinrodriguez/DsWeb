@@ -1,101 +1,133 @@
-# DulceSal Pastelería - Product Requirements Document
+# DulceSal Pastelería - Backend Development & Online Ordering System
 
-## Original Problem Statement
-Crear una página web basada en el perfil de Instagram: https://www.instagram.com/dulcesal_pasteleria
+## Phase 2: Backend Implementation
 
-## Project Overview
-**Type:** Bakery/Pastry Shop Website
-**Stack:** React + FastAPI + MongoDB
-**Purpose:** Professional website to showcase products, services, and enable customer contact
+### Database Models
 
-## User Personas
-1. **Potential Customers**: Looking to order custom cakes, pastries for events
-2. **Walk-in Customers**: Seeking information about products, location, hours
-3. **Event Planners**: Need catering services for weddings, corporate events
+#### 1. Products
+```python
+{
+  "_id": ObjectId,
+  "name": str,
+  "category": str,  # "Tortas", "Panadería", "Eventos", "Postres"
+  "description": str,
+  "price": float,
+  "image": str,  # URL or base64
+  "active": bool,
+  "created_at": datetime,
+  "updated_at": datetime
+}
+```
 
-## Core Requirements (Static)
-- Hero section with brand identity
-- Product showcase with categories
-- Services information
-- About us section
-- Customer testimonials
-- Contact form
-- Responsive design
-- Professional bakery aesthetic
+#### 2. Testimonials
+```python
+{
+  "_id": ObjectId,
+  "name": str,
+  "rating": int,  # 1-5
+  "comment": str,
+  "date": datetime,
+  "approved": bool,
+  "created_at": datetime
+}
+```
 
-## Implementation Status
+#### 3. SiteConfig
+```python
+{
+  "_id": ObjectId,
+  "key": str,  # "phone", "email", "address", "hours", "instagram", etc.
+  "value": str,
+  "updated_at": datetime
+}
+```
 
-### Phase 1: Frontend with Mock Data ✅ (Completed - Dec 2024)
+#### 4. Orders
+```python
+{
+  "_id": ObjectId,
+  "order_number": str,  # "ORD-20241225-001"
+  "customer_name": str,
+  "customer_email": str,
+  "customer_phone": str,
+  "delivery_address": str,
+  "items": [
+    {
+      "product_id": str,
+      "product_name": str,
+      "quantity": int,
+      "unit_price": float,
+      "subtotal": float
+    }
+  ],
+  "total": float,
+  "status": str,  # "pending", "confirmed", "preparing", "completed", "cancelled"
+  "notes": str,
+  "created_at": datetime,
+  "updated_at": datetime
+}
+```
 
-**Completed Components:**
-- ✅ Header with smooth scroll navigation and mobile menu
-- ✅ Hero section with compelling CTAs and stats
-- ✅ Products gallery with category filtering (6 products)
-- ✅ Services section (4 service cards)
-- ✅ About section with brand story
-- ✅ Testimonials (3 customer reviews)
-- ✅ Contact form with info cards
-- ✅ Footer with social links
+### API Endpoints
 
-**Design Implementation:**
-- ✅ Rose/pink color scheme (warm, bakery-appropriate)
-- ✅ Professional spacing and typography
-- ✅ Lucide-react icons (no emoji)
-- ✅ Smooth animations and hover effects
-- ✅ High-quality bakery images from Unsplash/Pexels
-- ✅ Toast notifications for user feedback
-- ✅ Mobile-responsive design
+#### Products
+- `GET /api/products` - Get all active products (public)
+- `GET /api/products/{id}` - Get product by ID
+- `POST /api/products` - Create new product (admin)
+- `PUT /api/products/{id}` - Update product (admin)
+- `DELETE /api/products/{id}` - Delete product (admin)
 
-**Mock Data Location:** `/app/frontend/src/data/mock.js`
-- Products with categories, prices, descriptions
-- Testimonials with ratings
-- Services information
-- Contact information
+#### Testimonials
+- `GET /api/testimonials` - Get all approved testimonials (public)
+- `POST /api/testimonials` - Submit new testimonial (public)
+- `PUT /api/testimonials/{id}/approve` - Approve testimonial (admin)
+- `DELETE /api/testimonials/{id}` - Delete testimonial (admin)
 
-## Prioritized Backlog
+#### Site Configuration
+- `GET /api/config` - Get all site configuration (public)
+- `PUT /api/config` - Update site configuration (admin)
 
-### Phase 2: Backend Development (P0 - Next Priority)
+#### Orders
+- `POST /api/orders` - Create new order (public)
+- `GET /api/orders` - Get all orders (admin)
+- `GET /api/orders/{id}` - Get order by ID
+- `PUT /api/orders/{id}/status` - Update order status (admin)
 
-**API Endpoints Needed:**
-1. `POST /api/contact` - Handle contact form submissions
-2. `GET /api/products` - Fetch products from database
-3. `POST /api/products` - Admin: Add new products
-4. `GET /api/testimonials` - Fetch testimonials
-5. `POST /api/testimonials` - Submit new testimonial
+#### Contact
+- `POST /api/contact` - Submit contact form (public)
 
-**Database Models:**
-1. Products: name, category, description, price, image_url, created_at
-2. ContactMessages: name, email, phone, message, timestamp, status
-3. Testimonials: name, rating, comment, date, approved
+### Frontend Integration
 
-**Integration Points:**
-- Replace mock.js data with API calls
-- Add loading states
-- Error handling
-- Form validation
+#### Remove Mock Data
+- Delete `/app/frontend/src/data/mock.js`
+- Create API service layer `/app/frontend/src/services/api.js`
 
-### Phase 3: Enhancements (P1)
+#### New Features
+1. **Shopping Cart**
+   - Add to cart functionality
+   - Cart sidebar/modal
+   - Update quantities
+   - Remove items
 
-- Admin dashboard for managing products
-- Image upload for products
-- Email notifications for contact form
-- Product search functionality
-- Blog/Recipe section
+2. **Checkout Page**
+   - Customer information form
+   - Order summary
+   - Submit order
+   - Order confirmation
 
-### Phase 4: Advanced Features (P2)
+3. **Context/State Management**
+   - CartContext for managing cart state
+   - API integration for products, testimonials
 
-- Online ordering system with cart
-- Payment integration (Stripe)
-- User accounts
-- Order tracking
-- Analytics dashboard
-
-## Next Tasks
-1. ✅ Complete frontend with mock data
-2. Get user approval on design
-3. Build backend API endpoints
-4. Integrate frontend with backend
-5. Test end-to-end functionality
+### Implementation Order
+1. Create database models in backend
+2. Implement API endpoints
+3. Create API service layer in frontend
+4. Integrate products API
+5. Add shopping cart functionality
+6. Create checkout flow
+7. Test end-to-end with testing_agent_v3
 
 ---
-**Last Updated:** December 2024
+**Status:** Ready to implement
+**Date:** December 2024
