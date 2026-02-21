@@ -99,6 +99,23 @@ export const AdminPanel = () => {
     }
   };
 
+  const handleUpdateOrderStatus = async (orderId, newStatus) => {
+    try {
+      await updateOrderStatus(orderId, newStatus);
+      toast.success('Estado del pedido actualizado');
+      loadData();
+    } catch (error) {
+      console.error('Error updating order status:', error);
+      toast.error('Error al actualizar estado');
+    }
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate('/admin/login');
+    toast.success('Sesión cerrada');
+  };
+
   const resetProductForm = () => {
     setProductForm({
       name: '',
