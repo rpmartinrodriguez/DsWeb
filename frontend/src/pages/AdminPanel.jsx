@@ -169,12 +169,24 @@ export const AdminPanel = () => {
               Gestiona productos, pedidos y testimonios
             </p>
           </div>
-          <Button
-            onClick={() => navigate('/')}
-            className="bg-[#E8B4B8] hover:bg-[#D8A7A7] text-[#5c3a3a] font-['Cormorant_Garamond'] font-semibold border-2 border-[#C9A5A5]"
-          >
-            Volver al Sitio
-          </Button>
+          <div className="flex gap-3">
+            <Button
+              data-testid="admin-home-btn"
+              onClick={() => navigate('/')}
+              className="bg-[#E8B4B8] hover:bg-[#D8A7A7] text-[#5c3a3a] font-['Cormorant_Garamond'] font-semibold border-2 border-[#C9A5A5]"
+            >
+              Volver al Sitio
+            </Button>
+            <Button
+              data-testid="admin-logout-btn"
+              onClick={handleLogout}
+              variant="outline"
+              className="border-2 border-[#C9A5A5] text-[#5c3a3a] font-['Cormorant_Garamond'] font-semibold hover:bg-[#C9A5A5]/20"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Cerrar Sesión
+            </Button>
+          </div>
         </div>
 
         {/* Stats Cards */}
