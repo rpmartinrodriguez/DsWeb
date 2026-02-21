@@ -63,12 +63,12 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify({ username, password })
       });
 
+      const data = await response.json();
+      
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.detail || 'Error al iniciar sesión');
+        throw new Error(data.detail || 'Error al iniciar sesión');
       }
 
-      const data = await response.json();
       localStorage.setItem('adminToken', data.access_token);
       setToken(data.access_token);
       setIsAuthenticated(true);
