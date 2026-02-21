@@ -112,7 +112,6 @@ export const Testimonials = () => {
             </Card>
           ))}
         </div>
-        </div>
 
         {/* Trust Badges - Vintage Style */}
         <div className="mt-16 flex flex-wrap justify-center items-center gap-12 md:gap-20">
