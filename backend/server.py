@@ -5,6 +5,7 @@ import os
 import logging
 from pathlib import Path
 from routes import router
+from auth import router as auth_router
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -14,6 +15,7 @@ app = FastAPI(title="DulceSal Pastelería API", version="2.0")
 
 # Include routes
 app.include_router(router, prefix="/api")
+app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
 
 # CORS middleware
 app.add_middleware(
