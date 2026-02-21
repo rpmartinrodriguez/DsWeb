@@ -98,6 +98,7 @@ function App() {
               />
             </Routes>
             <CartSidebar />
+            <WhatsAppButton />
             <Toaster position="top-right" />
           </div>
         </BrowserRouter>
