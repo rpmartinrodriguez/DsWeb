@@ -68,8 +68,8 @@ async def get_product(product_id: str):
     return Product(**product_dict)
 
 @router.post("/products", response_model=Product, status_code=status.HTTP_201_CREATED)
-async def create_product(product: ProductCreate):
-    """Create new product"""
+async def create_product(product: ProductCreate, admin: AdminUser = Depends(get_current_admin)):
+    """Create new product (Admin only)"""
     product_dict = product.dict()
     product_dict["created_at"] = datetime.utcnow()
     product_dict["updated_at"] = datetime.utcnow()
