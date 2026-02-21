@@ -112,15 +112,21 @@ export const Contact = () => {
             </Card>
           </div>
 
-          {/* Contact Form */}
+          {/* Contact Form - Vintage Style */}
           <div className="lg:col-span-2">
-            <Card className="border-2 border-rose-100 shadow-xl bg-white">
-              <CardContent className="p-8">
+            <Card className="border-6 border-[#E8B4B8] shadow-2xl bg-[#F5EDE0] relative">
+              {/* Vintage Corner Decorations */}
+              <div className="absolute top-3 left-3 w-8 h-8 border-t-3 border-l-3 border-[#C9A875]"></div>
+              <div className="absolute top-3 right-3 w-8 h-8 border-t-3 border-r-3 border-[#C9A875]"></div>
+              <div className="absolute bottom-3 left-3 w-8 h-8 border-b-3 border-l-3 border-[#C9A875]"></div>
+              <div className="absolute bottom-3 right-3 w-8 h-8 border-b-3 border-r-3 border-[#C9A875]"></div>
+              
+              <CardContent className="p-10">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Nombre Completo *
+                      <label className="block text-sm font-['Cormorant_Garamond'] font-semibold text-[#5c3a3a] mb-2 tracking-wider">
+                        NOMBRE COMPLETO *
                       </label>
                       <Input
                         name="name"
@@ -128,12 +134,12 @@ export const Contact = () => {
                         onChange={handleChange}
                         placeholder="Tu nombre"
                         required
-                        className="border-gray-300 focus:border-rose-500 focus:ring-rose-500"
+                        className="border-2 border-[#E8B4B8] focus:border-[#C9A5A5] focus:ring-[#E8B4B8] bg-[#F5EDE0] font-['Cormorant_Garamond']"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Email *
+                      <label className="block text-sm font-['Cormorant_Garamond'] font-semibold text-[#5c3a3a] mb-2 tracking-wider">
+                        EMAIL *
                       </label>
                       <Input
                         name="email"
@@ -142,14 +148,14 @@ export const Contact = () => {
                         onChange={handleChange}
                         placeholder="tu@email.com"
                         required
-                        className="border-gray-300 focus:border-rose-500 focus:ring-rose-500"
+                        className="border-2 border-[#E8B4B8] focus:border-[#C9A5A5] focus:ring-[#E8B4B8] bg-[#F5EDE0] font-['Cormorant_Garamond']"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Teléfono *
+                    <label className="block text-sm font-['Cormorant_Garamond'] font-semibold text-[#5c3a3a] mb-2 tracking-wider">
+                      TELÉFONO *
                     </label>
                     <Input
                       name="phone"
@@ -158,13 +164,13 @@ export const Contact = () => {
                       onChange={handleChange}
                       placeholder="+57 300 123 4567"
                       required
-                      className="border-gray-300 focus:border-rose-500 focus:ring-rose-500"
+                      className="border-2 border-[#E8B4B8] focus:border-[#C9A5A5] focus:ring-[#E8B4B8] bg-[#F5EDE0] font-['Cormorant_Garamond']"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Mensaje *
+                    <label className="block text-sm font-['Cormorant_Garamond'] font-semibold text-[#5c3a3a] mb-2 tracking-wider">
+                      MENSAJE *
                     </label>
                     <Textarea
                       name="message"
@@ -173,39 +179,46 @@ export const Contact = () => {
                       placeholder="Cuéntanos sobre tu evento o el producto que deseas..."
                       rows={6}
                       required
-                      className="border-gray-300 focus:border-rose-500 focus:ring-rose-500 resize-none"
+                      className="border-2 border-[#E8B4B8] focus:border-[#C9A5A5] focus:ring-[#E8B4B8] resize-none bg-[#F5EDE0] font-['Cormorant_Garamond']"
                     />
                   </div>
 
                   <Button
                     type="submit"
                     size="lg"
-                    className="w-full bg-rose-500 hover:bg-rose-600 text-white"
+                    className="w-full bg-[#E8B4B8] hover:bg-[#D8A7A7] text-[#5c3a3a] font-['Cormorant_Garamond'] font-bold text-lg border-4 border-[#C9A5A5] shadow-lg relative group overflow-hidden"
                   >
-                    <Send className="w-5 h-5 mr-2" />
-                    Enviar Mensaje
+                    <span className="relative z-10 flex items-center justify-center gap-2">
+                      <Send className="w-5 h-5" />
+                      Enviar Mensaje
+                    </span>
+                    <div className="absolute inset-0 bg-[#C9A5A5] transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                   </Button>
                 </form>
 
-                {/* Social Links */}
-                <div className="mt-8 pt-8 border-t border-gray-200">
-                  <p className="text-center text-gray-600 mb-4">O síguenos en nuestras redes</p>
-                  <div className="flex justify-center gap-4">
+                {/* Social Links - Vintage Style */}
+                <div className="mt-10 pt-10 border-t-2 border-[#E8B4B8]">
+                  <p className="text-center text-[#8B6F6F] mb-6 font-['Cormorant_Garamond'] text-lg">O síguenos en nuestras redes</p>
+                  <div className="flex justify-center gap-6">
                     <a
                       href={contactInfo.social.instagram}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-12 h-12 bg-rose-100 hover:bg-rose-500 rounded-full flex items-center justify-center transition-colors group"
+                      className="w-14 h-14 bg-[#E8B4B8]/40 border-3 border-[#E8B4B8] hover:bg-[#E8B4B8] flex items-center justify-center transition-colors group relative"
                     >
-                      <Instagram className="w-6 h-6 text-rose-600 group-hover:text-white transition-colors" />
+                      <Instagram className="w-7 h-7 text-[#8B6F6F] group-hover:text-[#F5EDE0] transition-colors" />
+                      <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-[#C9A875]"></div>
+                      <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-[#C9A875]"></div>
                     </a>
                     <a
                       href={contactInfo.social.whatsapp}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-12 h-12 bg-rose-100 hover:bg-rose-500 rounded-full flex items-center justify-center transition-colors group"
+                      className="w-14 h-14 bg-[#E8B4B8]/40 border-3 border-[#E8B4B8] hover:bg-[#E8B4B8] flex items-center justify-center transition-colors group relative"
                     >
-                      <Phone className="w-6 h-6 text-rose-600 group-hover:text-white transition-colors" />
+                      <Phone className="w-7 h-7 text-[#8B6F6F] group-hover:text-[#F5EDE0] transition-colors" />
+                      <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-[#C9A875]"></div>
+                      <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-[#C9A875]"></div>
                     </a>
                   </div>
                 </div>
