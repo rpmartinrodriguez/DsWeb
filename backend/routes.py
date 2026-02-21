@@ -135,8 +135,8 @@ async def create_testimonial(testimonial: TestimonialCreate):
     return Testimonial(**{**created, "id": str(created["_id"])})
 
 @router.put("/testimonials/{testimonial_id}/approve", response_model=Testimonial)
-async def approve_testimonial(testimonial_id: str):
-    """Approve testimonial"""
+async def approve_testimonial(testimonial_id: str, admin: AdminUser = Depends(get_current_admin)):
+    """Approve testimonial (Admin only)"""
     result = await db.testimonials.update_one(
         {"_id": testimonial_id},
         {"$set": {"approved": True}}
