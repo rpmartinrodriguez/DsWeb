@@ -10,14 +10,23 @@ from models import (
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 from datetime import datetime
+from dotenv import load_dotenv
+from pathlib import Path
+
+# Load environment variables
+ROOT_DIR = Path(__file__).parent
+load_dotenv(ROOT_DIR / '.env')
 
 # Initialize router
 router = APIRouter()
 
 # Get database
 mongo_url = os.environ.get('MONGO_URL')
+db_name = os.environ.get('DB_NAME', 'dulcesal')
 client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ.get('DB_NAME', 'dulcesal')]
+db = client[db_name]
+
+print(f"[ROUTES] Connected to MongoDB: {mongo_url}, Database: {db_name}")
 
 # ==================== PRODUCTS ====================
 
