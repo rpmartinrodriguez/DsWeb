@@ -1,4 +1,5 @@
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, status, Depends, UploadFile, File
+from fastapi.responses import FileResponse
 from typing import List
 from models import (
     Product, ProductCreate,
@@ -10,6 +11,8 @@ from models import (
 from motor.motor_asyncio import AsyncIOMotorClient
 from auth import get_current_admin, AdminUser
 import os
+import uuid
+import shutil
 from datetime import datetime
 from dotenv import load_dotenv
 from pathlib import Path
@@ -20,6 +23,10 @@ load_dotenv(ROOT_DIR / '.env')
 
 # Initialize router
 router = APIRouter()
+
+# Upload directory
+UPLOAD_DIR = ROOT_DIR / "uploads"
+UPLOAD_DIR.mkdir(exist_ok=True)
 
 # Get database
 mongo_url = os.environ.get('MONGO_URL')
