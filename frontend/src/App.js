@@ -11,6 +11,7 @@ import { Testimonials } from './components/Testimonials';
 import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { CartSidebar } from './components/CartSidebar';
+import { WhatsAppButton } from './components/WhatsAppButton';
 import { Checkout } from './pages/Checkout';
 import { AdminPanel } from './pages/AdminPanel';
 import { AdminLogin } from './pages/AdminLogin';
