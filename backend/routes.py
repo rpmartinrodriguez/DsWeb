@@ -259,3 +259,71 @@ async def submit_contact(contact: ContactMessage):
     contact_dict = contact.dict()
     await db.contact_messages.insert_one(contact_dict)
     return {"message": "Contact form submitted successfully"}
+
+
+
+# ==================== IMAGE UPLOAD ====================
+
+ALLOWED_EXTENSIONS = {'.jpg', '.jpeg', '.png', '.gif', '.webp'}
+MAX_FILE_SIZE = 5 * 1024 * 1024  # 5MB
+
+@router.post("/upload")
+async def upload_image(
+    file: UploadFile = File(...),
+    admin: AdminUser = Depends(get_current_admin)
+):
+    """Upload an image file (Admin only)"""
+    # Validate file extension
+    file_ext = Path(file.filename).suffix.lower()
+    if file_ext not in ALLOWED_EXTENSIONS:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Tipo de archivo no permitido. Usar: {', '.join(ALLOWED_EXTENSIONS)}"
+        )
+    
+    # Read file content
+    content = await file.read()
+    
+    # Validate file size
+    if len(content) > MAX_FILE_SIZE:
+        raise HTTPException(
+            status_code=400,
+            detail="El archivo es muy grande. Máximo 5MB"
+        )
+    
+    # Generate unique filename
+    unique_filename = f"{uuid.uuid4().hex}{file_ext}"
+    file_path = UPLOAD_DIR / unique_filename
+    
+    # Save file
+    with open(file_path, "wb") as f:
+        f.write(content)
+    
+    # Return the URL to access the image
+    return {
+        "filename": unique_filename,
+        "url": f"/api/uploads/{unique_filename}"
+    }
+
+@router.get("/uploads/{filename}")
+async def get_uploaded_image(filename: str):
+    """Serve uploaded images"""
+    file_path = UPLOAD_DIR / filename
+    
+    if not file_path.exists():
+        raise HTTPException(status_code=404, detail="Imagen no encontrada")
+    
+    # Determine content type
+    ext = Path(filename).suffix.lower()
+    content_types = {
+        '.jpg': 'image/jpeg',
+        '.jpeg': 'image/jpeg',
+        '.png': 'image/png',
+        '.gif': 'image/gif',
+        '.webp': 'image/webp'
+    }
+    
+    return FileResponse(
+        path=file_path,
+        media_type=content_types.get(ext, 'application/octet-stream')
+    )
