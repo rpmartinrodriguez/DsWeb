@@ -20,6 +20,7 @@ export const AdminPanel = () => {
   const [loading, setLoading] = useState(true);
   const [editingProduct, setEditingProduct] = useState(null);
   const [showProductForm, setShowProductForm] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
   
   const [productForm, setProductForm] = useState({
     name: '',
