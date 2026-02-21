@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Depends
 from typing import List
 from models import (
     Product, ProductCreate,
@@ -8,6 +8,7 @@ from models import (
     ContactMessage
 )
 from motor.motor_asyncio import AsyncIOMotorClient
+from auth import get_current_admin, AdminUser
 import os
 from datetime import datetime
 from dotenv import load_dotenv
