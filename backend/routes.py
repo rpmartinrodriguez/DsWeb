@@ -96,8 +96,8 @@ async def update_product(product_id: str, product: ProductCreate, admin: AdminUs
     return Product(**{**updated_product, "id": str(updated_product["_id"])})
 
 @router.delete("/products/{product_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_product(product_id: str):
-    """Delete product (soft delete by setting active=False)"""
+async def delete_product(product_id: str, admin: AdminUser = Depends(get_current_admin)):
+    """Delete product (Admin only - soft delete by setting active=False)"""
     result = await db.products.update_one(
         {"_id": product_id},
         {"$set": {"active": False, "updated_at": datetime.utcnow()}}
