@@ -24,15 +24,25 @@ db = client[os.environ.get('DB_NAME', 'dulcesal')]
 @router.get("/products")
 async def get_products(active_only: bool = True):
     """Get all products (public endpoint)"""
+    import logging
+    logger = logging.getLogger(__name__)
+    
     query = {"active": True} if active_only else {}
+    logger.info(f"Query: {query}")
+    
     products = await db.products.find(query).to_list(100)
+    logger.info(f"Found {len(products)} products")
+    
     result = []
     for product in products:
         product_dict = dict(product)
+        logger.info(f"Processing product: {product_dict.get('name', 'unknown')}")
         product_dict['id'] = str(product_dict.get('_id', ''))
         if '_id' in product_dict:
             del product_dict['_id']
         result.append(product_dict)
+    
+    logger.info(f"Returning {len(result)} products")
     return result
 
 @router.get("/products/{product_id}", response_model=Product)
