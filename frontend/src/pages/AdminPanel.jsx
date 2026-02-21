@@ -90,6 +90,38 @@ export const AdminPanel = () => {
     }
   };
 
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    // Validate file type
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      toast.error('Tipo de archivo no permitido. Usar JPG, PNG, GIF o WebP');
+      return;
+    }
+
+    // Validate file size (5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('El archivo es muy grande. Máximo 5MB');
+      return;
+    }
+
+    setUploadingImage(true);
+    try {
+      const result = await uploadImage(file);
+      const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+      const fullUrl = `${BACKEND_URL}${result.url}`;
+      setProductForm({ ...productForm, image: fullUrl });
+      toast.success('Imagen subida correctamente');
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      toast.error('Error al subir imagen');
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
   const handleApproveTestimonial = async (id) => {
     try {
       await approveTestimonial(id);
