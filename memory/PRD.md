@@ -1,11 +1,11 @@
 # DulceSal Pastelería - Product Requirements Document
 
 ## Original Problem Statement
-Create a website for Dulcesal Pastelería bakery based on their Instagram profile. The site should have a vintage pink design, a backend system to manage content, and an online ordering system with an admin panel.
+Create a website for Dulcesal Pastelería bakery based on their Instagram profile. The site should have a vintage pink design, a backend system to manage content, an online ordering system with an admin panel, and WhatsApp integration.
 
 ## User Personas
-1. **Customer**: Browses products, adds items to cart, places orders
-2. **Admin**: Manages products, views/updates orders, approves testimonials
+1. **Customer**: Browses products, adds items to cart, places orders, contacts via WhatsApp
+2. **Admin**: Manages products, views/updates orders, approves testimonials, contacts customers via WhatsApp
 
 ## Core Requirements
 - [x] Website with vintage pink aesthetic
@@ -16,6 +16,8 @@ Create a website for Dulcesal Pastelería bakery based on their Instagram profil
 - [x] Product management (CRUD)
 - [x] Order management with status updates
 - [x] Testimonial management
+- [x] WhatsApp integration for customer contact
+- [x] WhatsApp notifications for orders
 
 ---
 
@@ -36,11 +38,12 @@ Create a website for Dulcesal Pastelería bakery based on their Instagram profil
 
 ### Key Files
 - `backend/server.py` - Main FastAPI app
-- `backend/routes.py` - API endpoints
+- `backend/routes.py` - API endpoints (protected with JWT)
 - `backend/auth.py` - JWT authentication
 - `backend/models.py` - Pydantic models
-- `frontend/src/App.js` - Main router
-- `frontend/src/services/api.js` - API client
+- `frontend/src/App.js` - Main router with protected routes
+- `frontend/src/services/api.js` - API client with auth headers
+- `frontend/src/components/WhatsAppButton.jsx` - Floating WhatsApp button
 
 ---
 
@@ -74,6 +77,13 @@ Create a website for Dulcesal Pastelería bakery based on their Instagram profil
 - [x] Testimonials approval
 - [x] Logout functionality
 
+### Phase 4 - WhatsApp Integration (COMPLETED - Dec 2025)
+- [x] Floating WhatsApp button on homepage
+- [x] Quick options menu (order, custom cakes, inquiries)
+- [x] "Guardar Pedido" button - sends order details to owner's WhatsApp
+- [x] "Contactar Cliente" button - opens chat with customer
+- [x] Pre-formatted messages in Spanish
+
 ---
 
 ## API Endpoints
@@ -103,52 +113,20 @@ Create a website for Dulcesal Pastelería bakery based on their Instagram profil
 
 ---
 
-## Database Schema
-
-### Products
-```json
-{
-  "name": "string",
-  "category": "string",
-  "description": "string",
-  "price": "float",
-  "image": "string (URL)",
-  "active": "boolean",
-  "created_at": "datetime",
-  "updated_at": "datetime"
-}
-```
-
-### Orders
-```json
-{
-  "order_number": "string",
-  "customer_name": "string",
-  "customer_email": "string",
-  "customer_phone": "string",
-  "delivery_address": "string",
-  "items": [{"product_id", "product_name", "quantity", "unit_price", "subtotal"}],
-  "total": "float",
-  "status": "pending|confirmed|preparing|completed|cancelled",
-  "notes": "string",
-  "created_at": "datetime"
-}
-```
-
----
-
 ## Credentials
 - **Admin Username**: admin
 - **Admin Password**: dulcesal2024
+- **WhatsApp Number**: +5493446410814
 
 ---
 
-## Remaining Tasks (P2 - Future)
-- [ ] Image upload functionality for products
-- [ ] WhatsApp integration for order notifications
-- [ ] Email notifications for orders
-- [ ] Password change feature for admin
-- [ ] Multiple admin users support
+## Deployment Ready
+The application is production-ready with:
+- Full authentication system
+- Protected admin routes
+- CRUD operations for all entities
+- WhatsApp integration
+- Responsive design
 
 ---
 
@@ -158,5 +136,14 @@ Create a website for Dulcesal Pastelería bakery based on their Instagram profil
 
 ---
 
+## Remaining Tasks (Future Enhancements)
+- [ ] Image upload functionality for products
+- [ ] Email notifications for orders
+- [ ] Password change feature for admin
+- [ ] Multiple admin users support
+- [ ] Order statistics dashboard
+
+---
+
 **Last Updated**: December 2025
-**Status**: Production Ready - Admin Panel Complete
+**Status**: ✅ Production Ready - All core features complete
