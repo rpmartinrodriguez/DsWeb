@@ -11,10 +11,33 @@ const apiClient = axios.create({
   },
 });
 
+// Add auth token to requests
+apiClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem('adminToken');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+// Handle 401 errors
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('adminToken');
+      window.location.href = '/admin/login';
+    }
+    return Promise.reject(error);
+  }
+);
+
 // ==================== PRODUCTS ====================
 
-export const getProducts = async () => {
-  const response = await apiClient.get('/products');
+export const getProducts = async (activeOnly = true) => {
+  const response = await apiClient.get('/products', {
+    params: { active_only: activeOnly }
+  });
   return response.data;
 };
 
@@ -39,8 +62,10 @@ export const deleteProduct = async (id) => {
 
 // ==================== TESTIMONIALS ====================
 
-export const getTestimonials = async () => {
-  const response = await apiClient.get('/testimonials');
+export const getTestimonials = async (approvedOnly = true) => {
+  const response = await apiClient.get('/testimonials', {
+    params: { approved_only: approvedOnly }
+  });
   return response.data;
 };
 
