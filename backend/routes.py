@@ -79,8 +79,8 @@ async def create_product(product: ProductCreate, admin: AdminUser = Depends(get_
     return Product(**{**created_product, "id": str(created_product["_id"])})
 
 @router.put("/products/{product_id}", response_model=Product)
-async def update_product(product_id: str, product: ProductCreate):
-    """Update product"""
+async def update_product(product_id: str, product: ProductCreate, admin: AdminUser = Depends(get_current_admin)):
+    """Update product (Admin only)"""
     product_dict = product.dict()
     product_dict["updated_at"] = datetime.utcnow()
     
