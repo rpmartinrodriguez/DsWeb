@@ -11,6 +11,7 @@ import { Contact } from './components/Contact';
 import { Footer } from './components/Footer';
 import { CartSidebar } from './components/CartSidebar';
 import { Checkout } from './pages/Checkout';
+import { AdminPanel } from './pages/AdminPanel';
 import { Toaster } from './components/ui/sonner';
 import './App.css';
 
@@ -37,6 +38,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/checkout" element={<Checkout />} />
+            <Route path="/admin" element={<AdminPanel />} />
           </Routes>
           <CartSidebar />
           <Toaster position="top-right" />
