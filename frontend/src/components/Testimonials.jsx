@@ -1,9 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent } from './ui/card';
 import { Star } from 'lucide-react';
-import { testimonials } from '../data/mock';
+import { getTestimonials } from '../services/api';
 
 export const Testimonials = () => {
+  const [testimonials, setTestimonials] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadTestimonials();
+  }, []);
+
+  const loadTestimonials = async () => {
+    try {
+      const data = await getTestimonials();
+      setTestimonials(data);
+    } catch (error) {
+      console.error('Error loading testimonials:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <section id="testimonios" className="py-24 bg-gradient-to-b from-[#EDE0D4] to-[#F5EDE0] relative">
       {/* Vintage Decorative Elements */}
@@ -35,7 +52,18 @@ export const Testimonials = () => {
 
         {/* Testimonials Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {testimonials.map((testimonial) => (
+          {loading ? (
+            <div className="col-span-full text-center py-10">
+              <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-[#E8B4B8] border-t-transparent"></div>
+            </div>
+          ) : testimonials.length === 0 ? (
+            <div className="col-span-full text-center py-10">
+              <p className="text-lg font-['Cormorant_Garamond'] text-[#8B6F6F]">
+                No hay testimonios disponibles
+              </p>
+            </div>
+          ) : (
+            testimonials.map((testimonial) => (
             <Card
               key={testimonial.id}
               className="border-4 border-[#E8B4B8]/30 hover:border-[#E8B4B8] transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 bg-[#F5EDE0] relative"
@@ -82,7 +110,9 @@ export const Testimonials = () => {
                 </div>
               </CardContent>
             </Card>
-          ))}
+          ))
+          )}
+        </div>
         </div>
 
         {/* Trust Badges - Vintage Style */}
