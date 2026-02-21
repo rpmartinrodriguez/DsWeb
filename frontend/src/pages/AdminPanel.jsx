@@ -116,6 +116,63 @@ export const AdminPanel = () => {
     toast.success('Sesión cerrada');
   };
 
+  // WhatsApp number for notifications
+  const WHATSAPP_NUMBER = '5493446410814';
+
+  const sendOrderToWhatsApp = (order) => {
+    const statusLabels = {
+      pending: 'Pendiente',
+      confirmed: 'Confirmado',
+      preparing: 'Preparando',
+      completed: 'Completado',
+      cancelled: 'Cancelado'
+    };
+
+    const itemsList = order.items.map(item => 
+      `• ${item.product_name} x${item.quantity} - ${formatPrice(item.subtotal)}`
+    ).join('\n');
+
+    const message = `🧁 *NUEVO PEDIDO - Dulcesal Pastelería*
+
+📋 *Pedido:* #${order.order_number}
+📅 *Fecha:* ${new Date(order.created_at).toLocaleString('es-ES')}
+📌 *Estado:* ${statusLabels[order.status]}
+
+👤 *Cliente:*
+• Nombre: ${order.customer_name}
+• Email: ${order.customer_email}
+• Teléfono: ${order.customer_phone}
+
+📍 *Dirección de entrega:*
+${order.delivery_address}
+
+🛒 *Productos:*
+${itemsList}
+
+💰 *TOTAL: ${formatPrice(order.total)}*
+
+${order.notes ? `📝 *Notas:* ${order.notes}` : ''}`;
+
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`, '_blank');
+  };
+
+  const contactCustomerWhatsApp = (order) => {
+    // Remove non-numeric characters from phone
+    const customerPhone = order.customer_phone.replace(/\D/g, '');
+    
+    const message = `¡Hola ${order.customer_name}! 👋
+
+Somos *Dulcesal Pastelería* 🧁
+
+Hemos recibido tu pedido #${order.order_number} por un total de ${formatPrice(order.total)}.
+
+¡Gracias por tu preferencia! Te mantendremos informado sobre el estado de tu pedido.`;
+
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/${customerPhone}?text=${encodedMessage}`, '_blank');
+  };
+
   const resetProductForm = () => {
     setProductForm({
       name: '',
