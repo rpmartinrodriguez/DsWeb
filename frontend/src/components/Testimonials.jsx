@@ -64,10 +64,10 @@ export const Testimonials = () => {
             </div>
           ) : (
             testimonials.map((testimonial) => (
-            <Card
-              key={testimonial.id}
-              className="border-4 border-[#E8B4B8]/30 hover:border-[#E8B4B8] transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 bg-[#F5EDE0] relative"
-            >
+              <Card
+                key={testimonial.id}
+                className="border-4 border-[#E8B4B8]/30 hover:border-[#E8B4B8] transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 bg-[#F5EDE0] relative"
+              >
               {/* Vintage Quote Mark */}
               <div className="absolute -top-4 left-6 text-[#C9A875] text-6xl font-['Playfair_Display'] opacity-40">"</div>
               
@@ -110,7 +110,8 @@ export const Testimonials = () => {
                 </div>
               </CardContent>
             </Card>
-          ))}
+            ))
+          )}
         </div>
 
         {/* Trust Badges - Vintage Style */}
