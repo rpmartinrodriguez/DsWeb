@@ -227,8 +227,8 @@ async def get_order(order_id: str):
     return Order(**{**order, "id": str(order["_id"])})
 
 @router.put("/orders/{order_id}/status", response_model=Order)
-async def update_order_status(order_id: str, status_update: OrderStatusUpdate):
-    """Update order status"""
+async def update_order_status(order_id: str, status_update: OrderStatusUpdate, admin: AdminUser = Depends(get_current_admin)):
+    """Update order status (Admin only)"""
     valid_statuses = ["pending", "confirmed", "preparing", "completed", "cancelled"]
     if status_update.status not in valid_statuses:
         raise HTTPException(status_code=400, detail=f"Invalid status. Must be one of: {', '.join(valid_statuses)}")
