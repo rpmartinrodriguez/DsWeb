@@ -397,19 +397,76 @@ Hemos recibido tu pedido #${order.order_number} por un total de ${formatPrice(or
                             className="border-2 border-[#E8B4B8] bg-[#F5EDE0]"
                           />
                         </div>
+                      </div>
 
-                        <div>
-                          <label className="block text-sm font-['Cormorant_Garamond'] font-semibold text-[#5c3a3a] mb-2">
-                            URL de Imagen *
-                          </label>
-                          <Input
-                            value={productForm.image}
-                            onChange={(e) => setProductForm({...productForm, image: e.target.value})}
-                            required
-                            placeholder="https://..."
-                            className="border-2 border-[#E8B4B8] bg-[#F5EDE0]"
+                      {/* Image Upload Section */}
+                      <div className="space-y-3">
+                        <label className="block text-sm font-['Cormorant_Garamond'] font-semibold text-[#5c3a3a]">
+                          Imagen del Producto *
+                        </label>
+                        
+                        {/* Image Preview */}
+                        {productForm.image && (
+                          <div className="relative w-full max-w-xs">
+                            <img 
+                              src={productForm.image} 
+                              alt="Preview" 
+                              className="w-full h-48 object-cover rounded-lg border-2 border-[#E8B4B8]"
+                              onError={(e) => {
+                                e.target.style.display = 'none';
+                              }}
+                            />
+                            <button
+                              type="button"
+                              onClick={() => setProductForm({...productForm, image: ''})}
+                              className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        )}
+
+                        <div className="flex gap-3">
+                          {/* Upload Button */}
+                          <input
+                            type="file"
+                            ref={fileInputRef}
+                            onChange={handleImageUpload}
+                            accept="image/jpeg,image/png,image/gif,image/webp"
+                            className="hidden"
                           />
+                          <Button
+                            type="button"
+                            onClick={() => fileInputRef.current?.click()}
+                            disabled={uploadingImage}
+                            className="bg-[#C9A875] hover:bg-[#B89764] text-white font-['Cormorant_Garamond'] font-semibold"
+                          >
+                            {uploadingImage ? (
+                              <>
+                                <span className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent mr-2"></span>
+                                Subiendo...
+                              </>
+                            ) : (
+                              <>
+                                <Upload className="w-4 h-4 mr-2" />
+                                Subir Imagen
+                              </>
+                            )}
+                          </Button>
+
+                          {/* Or URL input */}
+                          <div className="flex-1">
+                            <Input
+                              value={productForm.image}
+                              onChange={(e) => setProductForm({...productForm, image: e.target.value})}
+                              placeholder="O pegar URL de imagen..."
+                              className="border-2 border-[#E8B4B8] bg-[#F5EDE0]"
+                            />
+                          </div>
                         </div>
+                        <p className="text-xs text-[#8B6F6F]">
+                          Formatos: JPG, PNG, GIF, WebP. Máximo 5MB
+                        </p>
                       </div>
 
                       <div>
