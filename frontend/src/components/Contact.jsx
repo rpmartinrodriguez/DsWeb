@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { Card, CardContent } from './ui/card';
 import { MapPin, Phone, Mail, Clock, Instagram, Send } from 'lucide-react';
-import { contactInfo } from '../data/mock';
+import { getSiteConfig, submitContact } from '../services/api';
 import { toast } from 'sonner';
 
 export const Contact = () => {
@@ -14,14 +14,40 @@ export const Contact = () => {
     phone: '',
     message: ''
   });
+  const [contactInfo, setContactInfo] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    loadConfig();
+  }, []);
+
+  const loadConfig = async () => {
+    try {
+      const config = await getSiteConfig();
+      setContactInfo(config);
+    } catch (error) {
+      console.error('Error loading config:', error);
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Mock submission
-    toast.success('¡Mensaje enviado!', {
-      description: 'Nos pondremos en contacto contigo pronto.',
-    });
-    setFormData({ name: '', email: '', phone: '', message: '' });
+    setLoading(true);
+
+    try {
+      await submitContact(formData);
+      toast.success('¡Mensaje enviado!', {
+        description: 'Nos pondremos en contacto contigo pronto.',
+      });
+      setFormData({ name: '', email: '', phone: '', message: '' });
+    } catch (error) {
+      console.error('Error submitting contact:', error);
+      toast.error('Error al enviar el mensaje', {
+        description: 'Por favor, intenta nuevamente.',
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e) => {
@@ -30,6 +56,8 @@ export const Contact = () => {
       [e.target.name]: e.target.value
     });
   };
+
+  if (!contactInfo) return null;
 
   return (
     <section id="contacto" className="py-24 bg-gradient-to-b from-[#F5EDE0] to-[#EDE0D4]">
@@ -186,11 +214,12 @@ export const Contact = () => {
                   <Button
                     type="submit"
                     size="lg"
+                    disabled={loading}
                     className="w-full bg-[#E8B4B8] hover:bg-[#D8A7A7] text-[#5c3a3a] font-['Cormorant_Garamond'] font-bold text-lg border-4 border-[#C9A5A5] shadow-lg relative group overflow-hidden"
                   >
                     <span className="relative z-10 flex items-center justify-center gap-2">
                       <Send className="w-5 h-5" />
-                      Enviar Mensaje
+                      {loading ? 'Enviando...' : 'Enviar Mensaje'}
                     </span>
                     <div className="absolute inset-0 bg-[#C9A5A5] transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
                   </Button>
@@ -201,7 +230,7 @@ export const Contact = () => {
                   <p className="text-center text-[#8B6F6F] mb-6 font-['Cormorant_Garamond'] text-lg">O síguenos en nuestras redes</p>
                   <div className="flex justify-center gap-6">
                     <a
-                      href={contactInfo.social.instagram}
+                      href={contactInfo.instagram}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-14 h-14 bg-[#E8B4B8]/40 border-3 border-[#E8B4B8] hover:bg-[#E8B4B8] flex items-center justify-center transition-colors group relative"
@@ -211,7 +240,7 @@ export const Contact = () => {
                       <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-[#C9A875]"></div>
                     </a>
                     <a
-                      href={contactInfo.social.whatsapp}
+                      href={contactInfo.whatsapp}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-14 h-14 bg-[#E8B4B8]/40 border-3 border-[#E8B4B8] hover:bg-[#E8B4B8] flex items-center justify-center transition-colors group relative"
