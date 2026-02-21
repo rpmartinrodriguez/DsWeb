@@ -32,65 +32,82 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contacto" className="py-24 bg-gradient-to-b from-white to-rose-50/30">
+    <section id="contacto" className="py-24 bg-gradient-to-b from-[#F5EDE0] to-[#EDE0D4]">
       <div className="container mx-auto px-6">
         {/* Header */}
         <div className="text-center mb-16">
-          <span className="inline-block px-4 py-2 bg-rose-100 text-rose-800 rounded-full text-sm font-medium mb-4">
-            Contáctanos
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <div className="inline-block px-6 py-3 bg-[#E8B4B8]/30 border-2 border-[#E8B4B8] text-[#5c3a3a] mb-6 relative">
+            <span className="font-['Cormorant_Garamond'] text-sm font-semibold tracking-[0.3em]">CONTÁCTANOS</span>
+            <div className="absolute -top-2 -left-2 w-4 h-4 border-t-2 border-l-2 border-[#C9A875]"></div>
+            <div className="absolute -top-2 -right-2 w-4 h-4 border-t-2 border-r-2 border-[#C9A875]"></div>
+            <div className="absolute -bottom-2 -left-2 w-4 h-4 border-b-2 border-l-2 border-[#C9A875]"></div>
+            <div className="absolute -bottom-2 -right-2 w-4 h-4 border-b-2 border-r-2 border-[#C9A875]"></div>
+          </div>
+          <h2 className="text-5xl md:text-6xl font-['Playfair_Display'] font-bold text-[#5c3a3a] mb-4">
             Hablemos de Tu Próximo Evento
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="w-20 h-0.5 bg-[#C9A875]"></div>
+            <span className="text-[#C9A875] text-2xl">❦</span>
+            <div className="w-20 h-0.5 bg-[#C9A875]"></div>
+          </div>
+          <p className="text-xl text-[#8B6F6F] max-w-2xl mx-auto font-['Cormorant_Garamond'] italic">
             Estamos listos para hacer realidad tus ideas más dulces
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {/* Contact Info Cards */}
+          {/* Contact Info Cards - Vintage Style */}
           <div className="lg:col-span-1 space-y-6">
-            <Card className="border-2 border-rose-100 hover:border-rose-200 transition-colors bg-white">
+            <Card className="border-4 border-[#E8B4B8]/30 hover:border-[#E8B4B8] transition-colors bg-[#F5EDE0] relative">
+              <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-[#C9A875]"></div>
+              <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-[#C9A875]"></div>
               <CardContent className="p-6">
-                <div className="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center mb-4">
-                  <Phone className="w-6 h-6 text-rose-600" />
+                <div className="w-14 h-14 bg-[#E8B4B8]/40 border-3 border-[#E8B4B8] flex items-center justify-center mb-4">
+                  <Phone className="w-7 h-7 text-[#8B6F6F]" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Teléfono</h3>
-                <a href={`tel:${contactInfo.phone}`} className="text-gray-600 hover:text-rose-600 transition-colors">
+                <h3 className="font-['Playfair_Display'] font-bold text-[#5c3a3a] mb-2 text-lg">Teléfono</h3>
+                <a href={`tel:${contactInfo.phone}`} className="text-[#8B6F6F] hover:text-[#E8B4B8] transition-colors font-['Cormorant_Garamond']">
                   {contactInfo.phone}
                 </a>
               </CardContent>
             </Card>
 
-            <Card className="border-2 border-rose-100 hover:border-rose-200 transition-colors bg-white">
+            <Card className="border-4 border-[#E8B4B8]/30 hover:border-[#E8B4B8] transition-colors bg-[#F5EDE0] relative">
+              <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-[#C9A875]"></div>
+              <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-[#C9A875]"></div>
               <CardContent className="p-6">
-                <div className="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center mb-4">
-                  <Mail className="w-6 h-6 text-rose-600" />
+                <div className="w-14 h-14 bg-[#E8B4B8]/40 border-3 border-[#E8B4B8] flex items-center justify-center mb-4">
+                  <Mail className="w-7 h-7 text-[#8B6F6F]" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Email</h3>
-                <a href={`mailto:${contactInfo.email}`} className="text-gray-600 hover:text-rose-600 transition-colors break-all">
+                <h3 className="font-['Playfair_Display'] font-bold text-[#5c3a3a] mb-2 text-lg">Email</h3>
+                <a href={`mailto:${contactInfo.email}`} className="text-[#8B6F6F] hover:text-[#E8B4B8] transition-colors break-all font-['Cormorant_Garamond']">
                   {contactInfo.email}
                 </a>
               </CardContent>
             </Card>
 
-            <Card className="border-2 border-rose-100 hover:border-rose-200 transition-colors bg-white">
+            <Card className="border-4 border-[#E8B4B8]/30 hover:border-[#E8B4B8] transition-colors bg-[#F5EDE0] relative">
+              <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-[#C9A875]"></div>
+              <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-[#C9A875]"></div>
               <CardContent className="p-6">
-                <div className="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center mb-4">
-                  <MapPin className="w-6 h-6 text-rose-600" />
+                <div className="w-14 h-14 bg-[#E8B4B8]/40 border-3 border-[#E8B4B8] flex items-center justify-center mb-4">
+                  <MapPin className="w-7 h-7 text-[#8B6F6F]" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Ubicación</h3>
-                <p className="text-gray-600">{contactInfo.address}</p>
+                <h3 className="font-['Playfair_Display'] font-bold text-[#5c3a3a] mb-2 text-lg">Ubicación</h3>
+                <p className="text-[#8B6F6F] font-['Cormorant_Garamond']">{contactInfo.address}</p>
               </CardContent>
             </Card>
 
-            <Card className="border-2 border-rose-100 hover:border-rose-200 transition-colors bg-white">
+            <Card className="border-4 border-[#E8B4B8]/30 hover:border-[#E8B4B8] transition-colors bg-[#F5EDE0] relative">
+              <div className="absolute top-2 left-2 w-4 h-4 border-t-2 border-l-2 border-[#C9A875]"></div>
+              <div className="absolute bottom-2 right-2 w-4 h-4 border-b-2 border-r-2 border-[#C9A875]"></div>
               <CardContent className="p-6">
-                <div className="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center mb-4">
-                  <Clock className="w-6 h-6 text-rose-600" />
+                <div className="w-14 h-14 bg-[#E8B4B8]/40 border-3 border-[#E8B4B8] flex items-center justify-center mb-4">
+                  <Clock className="w-7 h-7 text-[#8B6F6F]" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Horario</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{contactInfo.hours}</p>
+                <h3 className="font-['Playfair_Display'] font-bold text-[#5c3a3a] mb-2 text-lg">Horario</h3>
+                <p className="text-[#8B6F6F] text-sm leading-relaxed font-['Cormorant_Garamond']">{contactInfo.hours}</p>
               </CardContent>
             </Card>
           </div>
